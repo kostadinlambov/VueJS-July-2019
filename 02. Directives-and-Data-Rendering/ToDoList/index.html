@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>Todo App</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="root">
+            <h1 v-bind:title="subtitle">{{title}}</h1>
+
+            <h2>Todo List</h2>
+
+         
+            <ul v-if="todos.length">
+                <li v-bind:class="{completed: todo.isCompleted}" 
+                v-for="(todo, index) in todos" v-key="todo.id" >
+                    {{todo.id}} - {{todo.text}}
+                    <!-- <div>Current Object Properties:</div>
+                    <div v-for="(value, key) in todo">
+                        {{key}} - {{value}}
+                    </div> -->
+                </li>
+            </ul>
+
+            <!-- <ul>
+                <li v-for="number in 5">{{ number }}</li>
+            </ul> -->
+            <p v-else>There are no todos!</p>
+        </div>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: '#root',
+            data: {
+                title: 'Todo App',
+                subtitle: 'First Vue Project!',
+                hasTodos: false,
+                elementClass: "completed",
+                todos: [{
+                        id: 1,
+                        text: "Do the dishes",
+                        isCompleted: false,
+                    },
+                    {
+                        id: 2,
+                        text: "Buy food",
+                        isCompleted: true
+                    },
+                    {
+                        id: 3,
+                        text: "Clean up",
+                        isCompleted: false
+                    },
+                ],
+                time: new Date()
+            },
+            methods: {
+                updateTime() {
+                    this.time = new Date();
+                },
+
+                updateTime2: function () {
+                    this.time = new Date();
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

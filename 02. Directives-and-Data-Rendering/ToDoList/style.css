@@ -1,0 +1,15 @@
+body{
+    background: bisque;
+    font-family: monospace;
+    font-size: 32px;
+}
+
+.wrapper{
+    width: 800px;
+    margin:auto;
+    background-color: burlywood;
+}
+
+.completed{
+    text-decoration-line: line-through;
+}
