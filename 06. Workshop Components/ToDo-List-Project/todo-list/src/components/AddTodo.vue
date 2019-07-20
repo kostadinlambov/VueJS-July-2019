@@ -1,15 +1,30 @@
 <template>
-    <p>
+    <div>
       <label for="new-task">Add Item</label>
-      <input id="new-task" type="text" />
-      <button>Add</button>
-    </p>
+      <input id="new-task" type="text" v-model="todoName"/>
+      <button @click="addNewTodo">Add</button>
+    </div>
 </template>
 
 <script>
 export default {
     name: 'add-todo',
+    data() {
+        return{
+            todoName:''
+        }
+    },
+    methods: {
+        addNewTodo() {
+            if(this.todoName.trim().length < 1){
+                return;
+            }
 
+           this.$emit('add-todo', this.todoName);
+
+           this.todoName = '';
+        }
+    }
 }
 </script>
 
