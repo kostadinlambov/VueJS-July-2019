@@ -4,40 +4,36 @@
     <button @click="changeTab('incompleted-todos')">ToDo</button>
     <button @click="changeTab('completed-todos')">Complete</button>
 
-    <!-- <add-todo></add-todo>
-    <incompleted-todos></incompleted-todos>
-    <completed-todos></completed-todos> -->
-
-    <component :is="activeTab"></component>
-
+    <keep-alive>
+       <component :is="activeTab"></component>
+    </keep-alive>
+   
   </div>
 </template>
 
 <script>
 /* eslint-disable */
-import AddTodo from './components/AddTodo'
-import CompletedTodos from './components/CompletedTodos'
-import IncompletedTodos from './components/IncompletedTodos'
-
+import AddTodo from "./components/AddTodo";
+import CompletedTodos from "./components/CompletedTodos";
+import IncompletedTodos from "./components/IncompletedTodos";
 
 export default {
   name: "app",
   data: function() {
     return {
-      activeTab: 'add-todo'
-    }
-
+      activeTab: "add-todo"
+    };
   },
-  components: {
-    AddTodo, 
-    CompletedTodos, 
-    IncompletedTodos
-  },
-  methods: {
-    changeTab(tabName){
+   methods: {
+    changeTab(tabName) {
       this.activeTab = tabName;
     }
-  }
+  },
+  components: {
+    AddTodo,
+    CompletedTodos,
+    IncompletedTodos
+  },
 };
 </script>
 
@@ -106,54 +102,5 @@ input[type="text"] {
 }
 input[type="text"]:focus {
   color: #333;
-}
-
-/* Add Item  */
-label[for="new-task"] {
-  display: block;
-  margin: 0 0 20px;
-}
-input#new-task {
-  float: left;
-  width: 318px;
-}
-p > button:hover {
-  color: #0fc57c;
-}
-/* ToDo List */
-li {
-  overflow: hidden;
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
-}
-li > label {
-  font-size: 18px;
-  line-height: 40px;
-  width: 237px;
-  padding: 0 0 0 11px;
-}
-
-button {
-  margin: 0 0 0 10px;
-}
-/* Completed Tasks */
-#completed-tasks label {
-  text-decoration: line-through;
-  color: #888;
-}
-
-li {
-  overflow: hidden;
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
-}
-li > label {
-  font-size: 18px;
-  line-height: 40px;
-  width: 237px;
-  padding: 0 0 0 11px;
-}
-li > .delete:hover {
-  color: #cf2323;
 }
 </style>

@@ -13,6 +13,17 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+/* Add Item  */
+label[for="new-task"] {
+  display: block;
+  margin: 0 0 20px;
+}
+input#new-task {
+  float: left;
+  width: 318px;
+}
+p > button:hover {
+  color: #0fc57c;
+}
 </style>
