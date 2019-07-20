@@ -7,7 +7,7 @@
     <keep-alive>
       <component 
         :is="activeTab" 
-        :todos="todos"
+        :incompletedTodos="incompletedTodos"
         @add-todo="onAddTodo"
         @complete-todo="onCompleteTodo"
       >
@@ -32,6 +32,11 @@ export default {
       todos
     };
   },
+  computed: {
+    incompletedTodos(){
+      return this.todos.filter(x => x.completed == false)
+    }
+  },
   methods: {
     changeTab(tabName) {
       this.activeTab = tabName;
@@ -49,7 +54,7 @@ export default {
 
       let currentTodo = this.todos.find(x => x.id === todoId);
       currentTodo.completed = true;
-      
+
     }
   },
   components: {
