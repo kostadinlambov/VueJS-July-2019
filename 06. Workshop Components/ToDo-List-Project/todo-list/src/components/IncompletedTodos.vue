@@ -4,7 +4,7 @@
     <ul id="incomplete-tasks">
       <li v-for="todo in todos" :key="todo.id">
         <label>{{todo.name}}</label>
-        <button class="complete">Complete</button>
+        <button class="complete" @click="completeTodo(todo.id)">Complete</button>
         <button class="delete">Delete</button>
       </li>
     </ul>
@@ -18,6 +18,11 @@ export default {
         todos: {
             type: Array,
             requred: true,
+        }
+    },
+    methods: {
+        completeTodo(todoId){
+            this.$emit('complete-todo', todoId);
         }
     }
 };

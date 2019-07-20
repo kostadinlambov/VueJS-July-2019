@@ -9,6 +9,7 @@
         :is="activeTab" 
         :todos="todos"
         @add-todo="onAddTodo"
+        @complete-todo="onCompleteTodo"
       >
       </component>
     </keep-alive>
@@ -42,6 +43,13 @@ export default {
         completed: false,
 
       })
+    },
+    onCompleteTodo(todoId){
+      console.log(todoId);
+
+      let currentTodo = this.todos.find(x => x.id === todoId);
+      currentTodo.completed = true;
+      
     }
   },
   components: {
