@@ -1,6 +1,7 @@
 <template>
   <li>
-    <label>{{todo.name}}</label>
+    <input v-if="todo.edit" @keyup.enter="finishEdit()" v-model="newName" type="text"  />
+    <label v-else @dblclick="editTodo(todo.id)">{{todo.name}}</label>
     <button class="complete" @click="completeTodo(todo.id)">Complete</button>
     <button class="delete" @click="deleteTodo(todo.id)">Delete</button>
   </li>
@@ -9,20 +10,34 @@
 <script>
 export default {
   name: "todo-item",
+  data(){
+      return {
+          newName: this.todo.name
+      }
+  },
   props: {
     todo: {
       type: Object,
-      required: true
+      required: true,
+
     }
   },
-   methods: {
-        completeTodo(todoId){
-            this.$root.$emit('complete-todo', todoId);
-        },
-        deleteTodo(todoId){
-            this.$root.$emit('delete-todo', todoId);
-        }
+  methods: {
+    completeTodo(todoId) {
+      this.$root.$emit("complete-todo", todoId);
+    },
+    deleteTodo(todoId) {
+      this.$root.$emit("delete-todo", todoId);
+    },
+    editTodo(todoId) {
+    //   this.todo.edit = true;
+    this.$root.$emit("begin-edit-todo", this.todo.id);
+    },
+    finishEdit(todoId) {
+    //   this.todo.edit = false;
+      this.$root.$emit("finish-edit-todo", Object.assign({}, this.todo, {name: this.newName}));
     }
+  }
 };
 </script>
 

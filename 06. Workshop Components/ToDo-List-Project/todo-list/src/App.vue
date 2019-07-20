@@ -50,11 +50,15 @@ export default {
     changeTab(tabName) {
       this.activeTab = tabName;
     },
+     getTodo(id) {
+      return this.todos.find(x => x.id === id);
+    },
     onAddTodo(todoName) {
       this.todos.push({
         id: this.todoIncrementId++,
         name: todoName,
-        completed: false
+        completed: false,
+        edit: false,
       });
     },
     onCompleteTodo(todoId) {
@@ -69,13 +73,32 @@ export default {
       let currentTodo = this.getTodo(todoId);
       this.todos = this.todos.filter(x => x.id != todoId);
     },
-    getTodo(id) {
-      return this.todos.find(x => x.id === id);
+    onEditTodo(todoId){
+      if(this.todos.some(t => t.edit)){
+        return;
+      }
+      let currentTodo = this.getTodo(todoId);
+      currentTodo.edit = true;
+    },
+    onFinishEditTodo(modifiedTodo){
+      // let currentTodo = this.getTodo(modifiedTodo.todoId);
+      // currentTodo.edit = false;
+
+      this.todos = this.todos.map(x => {
+        if(x.id === modifiedTodo.id){
+          modifiedTodo.edit = false;
+          return modifiedTodo;
+        }
+
+        return x;
+      })
     },
     addEventListeners(){
       this.$root.$on('delete-todo', this.onDeleteTodo);
       this.$root.$on('complete-todo', this.onCompleteTodo);
       this.$root.$on('restore-todo', this.onRestoreTodo);
+      this.$root.$on('begin-edit-todo', this.onEditTodo);
+      this.$root.$on('finish-edit-todo', this.onFinishEditTodo);
     }
   },
   mounted(){
