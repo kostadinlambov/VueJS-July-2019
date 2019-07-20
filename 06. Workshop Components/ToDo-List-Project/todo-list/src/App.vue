@@ -5,16 +5,13 @@
     <button @click="changeTab('completed-todos')">Complete</button>
 
     <keep-alive>
-      <component 
-        :is="activeTab" 
+      <component
+        :is="activeTab"
         :incompletedTodos="incompletedTodos"
         :completedTodos="completedTodos"
         @add-todo="onAddTodo"
-        @complete-todo="onCompleteTodo"
-        @restore-todo="onRestoreTodo"
-        @delete-todo="onDeleteTodo"
-      >
-      </component>
+       
+      ></component>
     </keep-alive>
   </div>
 </template>
@@ -28,6 +25,11 @@ import { todos } from "./data/todos";
 
 export default {
   name: "app",
+  components: {
+    AddTodo,
+    CompletedTodos,
+    IncompletedTodos
+  },
   data: function() {
     return {
       activeTab: "add-todo",
@@ -35,47 +37,49 @@ export default {
       todos
     };
   },
+
   computed: {
-    incompletedTodos(){
-      return this.todos.filter(x => x.completed == false)
+    incompletedTodos() {
+      return this.todos.filter(x => x.completed == false);
     },
-    completedTodos(){
-      return this.todos.filter(x => x.completed == true)
+    completedTodos() {
+      return this.todos.filter(x => x.completed == true);
     }
   },
   methods: {
     changeTab(tabName) {
       this.activeTab = tabName;
     },
-    onAddTodo(todoName){
+    onAddTodo(todoName) {
       this.todos.push({
         id: this.todoIncrementId++,
         name: todoName,
-        completed: false,
-
-      })
+        completed: false
+      });
     },
-    onCompleteTodo(todoId){
+    onCompleteTodo(todoId) {
       let currentTodo = this.getTodo(todoId);
       currentTodo.completed = true;
     },
-    onRestoreTodo(todoId){
+    onRestoreTodo(todoId) {
       let currentTodo = this.getTodo(todoId);
       currentTodo.completed = false;
     },
-    onDeleteTodo(todoId){
-      console.log(todoId)
-      let currentTodo = this.getTodo(todoId);  
-      this.todos = this.todos.filter(x => x.id != todoId);   
+    onDeleteTodo(todoId) {
+      let currentTodo = this.getTodo(todoId);
+      this.todos = this.todos.filter(x => x.id != todoId);
     },
-    getTodo(id){
+    getTodo(id) {
       return this.todos.find(x => x.id === id);
+    },
+    addEventListeners(){
+      this.$root.$on('delete-todo', this.onDeleteTodo);
+      this.$root.$on('complete-todo', this.onCompleteTodo);
+      this.$root.$on('restore-todo', this.onRestoreTodo);
     }
   },
-  components: {
-    AddTodo,
-    CompletedTodos,
-    IncompletedTodos
+  mounted(){
+    this.addEventListeners();
   }
 };
 </script>
