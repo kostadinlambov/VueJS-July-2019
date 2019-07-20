@@ -5,9 +5,8 @@
     <button @click="changeTab('completed-todos')">Complete</button>
 
     <keep-alive>
-       <component :is="activeTab"></component>
+      <component :is="activeTab" :todos="todos"></component>
     </keep-alive>
-   
   </div>
 </template>
 
@@ -16,15 +15,17 @@
 import AddTodo from "./components/AddTodo";
 import CompletedTodos from "./components/CompletedTodos";
 import IncompletedTodos from "./components/IncompletedTodos";
+import { todos } from "./data/todos";
 
 export default {
   name: "app",
   data: function() {
     return {
-      activeTab: "add-todo"
+      activeTab: "add-todo",
+      todos
     };
   },
-   methods: {
+  methods: {
     changeTab(tabName) {
       this.activeTab = tabName;
     }
@@ -33,10 +34,9 @@ export default {
     AddTodo,
     CompletedTodos,
     IncompletedTodos
-  },
+  }
 };
 </script>
-
 
 <style>
 body {
