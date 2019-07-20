@@ -8,6 +8,7 @@
       <component 
         :is="activeTab" 
         :incompletedTodos="incompletedTodos"
+        :completedTodos="completedTodos"
         @add-todo="onAddTodo"
         @complete-todo="onCompleteTodo"
       >
@@ -35,6 +36,9 @@ export default {
   computed: {
     incompletedTodos(){
       return this.todos.filter(x => x.completed == false)
+    },
+    completedTodos(){
+      return this.todos.filter(x => x.completed == true)
     }
   },
   methods: {
