@@ -11,6 +11,7 @@
         :completedTodos="completedTodos"
         @add-todo="onAddTodo"
         @complete-todo="onCompleteTodo"
+        @restore-todo="onRestoreTodo"
       >
       </component>
     </keep-alive>
@@ -54,11 +55,15 @@ export default {
       })
     },
     onCompleteTodo(todoId){
-      console.log(todoId);
-
-      let currentTodo = this.todos.find(x => x.id === todoId);
+      let currentTodo = this.getTodo(todoId);
       currentTodo.completed = true;
-
+    },
+    onRestoreTodo(todoId){
+      let currentTodo = this.getTodo(todoId);
+      currentTodo.completed = false;
+    },
+    getTodo(id){
+      return this.todos.find(x => x.id === id);
     }
   },
   components: {
